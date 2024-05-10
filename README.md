@@ -9,7 +9,7 @@ As APIs possuem alguns elementos que servem à sua utilização:
 - **Métodos**: são os modos de consumo de uma API, que podem ser:
     - POST: inserção (CREATE)
     - GET: consulta/leitura (READ)
-    - UPDATE: atualização (UPDATE)
+    - PUT e PATCH: atualização (UPDATE)
     - DELETE: deleção (DELETE)
 
 Para este projeto vamos usar o Node.js e o NPM (Node Package Manager):
