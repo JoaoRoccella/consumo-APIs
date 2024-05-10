@@ -26,3 +26,6 @@ TO-DO (documentar):
 - Instalação das extensões para formatação de arquivo .json5
 - Chamada do script start com NPM ao invés do NPX
 - O que é o Chocolatey (e porque não instalá-lo agora)
+
+Da aula de sexta (10/05):
+- Instalação de dependencias de projeto com o comando npm install
