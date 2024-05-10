@@ -1,0 +1,14 @@
+{
+  "produtos": [
+    {
+      "id": "fd25",
+      "descricao": "Halls de hortelã",
+      "preco": 3
+    },
+    {
+      "id": "5ce5",
+      "descricao": "Quebra-queixo",
+      "preco": 0.4
+    }
+  ]
+}
