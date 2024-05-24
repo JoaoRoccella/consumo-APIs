@@ -29,3 +29,36 @@ TO-DO (documentar):
 
 Da aula de sexta (10/05):
 - Instalação de dependencias de projeto com o comando npm install
+
+## Requisição
+
+Para criar uma nova requisição, podemos utilizar a função fetch API.
+
+~~~js
+const requisicao = new Request('http://localhost:3000/produtos', {
+    "method": "GET",
+    "headers": {
+        "Content-type": "application/json"
+    }
+});
+~~~
+
+Utilizamos `new Request()` para _instanciar_ a interface `Request()` na variável `requisicao`, de forma que ela se torna um objeto com os métodos exigidos por essa interface.
+
+A requisição é constituída por duas partes: uma URL e um objeto JSON contendo as opções da requisição. 
+- **URL**: é o endereço do recurso que você deseja acessar.
+- **Objeto JSON**: é um objeto que pode conter informações como o método HTTP (GET, POST, PUT, DELETE, etc.), headers, body, etc.
+
+`method` define o método da requisição (nesse caso, GET) e `headers` define os cabeçalhos da requisição. `Content-type` define o tipo de conteúdo que está sendo enviado, nesse caso `application/json`.
+
+~~~js
+fetch(requisicao)
+    .then(resposta => resposta.json())
+    .then(resposta => { ... });
+~~~
+
+Agora, para enviar essa requisição, utilizamos a função `fetch()` que é uma função _assíncrona_ que retorna uma Promise. Essa Promise é _resolvida_ (ou cumprida -- fullfilled) com o objeto `Response` que representa a resposta do servidor.
+
+A função `then()` é utilizada para lidar com a resposta do servidor. Nesse caso, estamos utilizando `then()` duas vezes: uma vez para converter a resposta em JSON, com o método `json()` do objeto `resposta`, e outra vez para lidar com a resposta em si, já que o retorno do primeiro `then()` é parâmetro de entrada do segundo `then()`.
+
+O parâmetro de entrada de uma função `then()` é chamado de _função de callback_.
