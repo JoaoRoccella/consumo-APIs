@@ -1,1 +1,121 @@
-<script src="script.js"></script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+</head>
+
+<body>
+
+    <script>
+        // estilos.js
+        const linkStyle = document.createElement('link');
+        linkStyle.rel = 'stylesheet';
+        linkStyle.href = 'style.css';
+
+        document.head.append(linkStyle);
+        // fim estilos.js
+
+        // script.js
+        function consultaProdutos() {
+
+            const reqGet = new Request('http://localhost:3000/produtos', {
+                "method": "GET",
+                "headers": {
+                    "Content-type": "application/json"
+                }
+            });
+
+            fetch(reqGet)
+                .then(resposta => resposta.json())
+                .then(resposta => {
+
+                    const ul = document.createElement('ul');
+
+                    resposta.forEach(produto => {
+
+                        const liId = document.createElement('li');
+                        liId.innerHTML = produto.id;
+
+                        const liDescricao = document.createElement('li');
+                        liDescricao.innerHTML = produto.descricao;
+
+                        const liPreco = document.createElement('li');
+                        liPreco.innerHTML = produto.preco;
+
+                        ul.append(liId, liDescricao, liPreco);
+                    });
+
+                    document.body.appendChild(ul);
+
+                });
+
+        }
+
+        consultaProdutos();
+
+        const inputs = [
+            { "type": "text", "id": "IdProduto", "label": "ID" },
+            { "type": "text", "id": "descricao", "label": "Descrição" },
+            { "type": "text", "id": "preco", "label": "Preço" },
+        ];
+
+        function criaDivForm(inputs) {
+
+            const divForm = document.createElement('div');
+            divForm.classList.add('form');
+
+            inputs.forEach(produto => {
+                const div = document.createElement('div');
+                div.classList.add('controle-form');
+
+                const i = document.createElement('input');
+                i.type = produto.type;
+                i.id = produto.id;
+
+                const l = document.createElement('label');
+                l.htmlFor = produto.id;
+                l.innerHTML = produto.label;
+
+                div.append(l, i);
+                divForm.append(div);
+            });
+
+            const btAdd = document.createElement('button');
+            btAdd.type = 'button';
+            btAdd.id = 'btAdd';
+            btAdd.innerHTML = 'Adicionar';
+            divForm.append(btAdd);
+            
+            return divForm;
+
+        }
+
+        const divForm = criaDivForm(inputs);
+        document.body.append(divForm);
+
+        document.querySelector('#btAdd').addEventListener('click', () => {
+
+            const produto = {
+                "descricao": document.querySelector('#descricao').value,
+                "preco": document.querySelector('#preco').value
+            }
+
+            const reqPost = new Request('http://localhost:3000/produtos', {
+                "method": "POST",
+                "headers": {
+                    "Content-type": "application/json"
+                },
+                "body": JSON.stringify(produto)
+            })
+
+            fetch(reqPost)
+
+        });
+
+    </script>
+</body>
+
+</html>

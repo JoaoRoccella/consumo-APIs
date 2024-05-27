@@ -1,8 +1,8 @@
 {
-  "dependencies": {
-    "json-server": "^1.0.0-alpha.23"
-  },
   "scripts": {
     "start": "npx json-server data/db.json"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.0"
   }
 }
