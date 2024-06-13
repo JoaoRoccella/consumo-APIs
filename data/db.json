@@ -9,6 +9,31 @@
       "id": "5ce5",
       "descricao": "Quebra-queixo",
       "preco": 0.4
+    },
+    {
+      "id": "58c2",
+      "descricao": "Girela de 4 queijos",
+      "preco": "6.00"
+    },
+    {
+      "id": "351a",
+      "descricao": "Batata",
+      "preco": "20.89"
+    },
+    {
+      "id": "0601",
+      "descricao": "Bala de canela",
+      "preco": "0.20"
+    },
+    {
+      "id": "e1b3",
+      "descricao": "Twix",
+      "preco": "3.5"
+    },
+    {
+      "id": "ef2e",
+      "descricao": "",
+      "preco": ""
     }
   ]
 }
