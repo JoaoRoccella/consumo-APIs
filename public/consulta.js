@@ -1,3 +1,7 @@
+function limpaProdutos() {
+    document.querySelector('#produtos').remove();
+}
+
 function consultaProdutos() {
 
     const reqGet = new Request('http://localhost:3000/produtos', {
@@ -7,12 +11,15 @@ function consultaProdutos() {
         }
     });
 
+    // a função fetch() retorna uma Promise, que é um objeto que representa a eventual conclusão ou falha de uma operação assíncrona
     fetch(reqGet)
         .then(resposta => resposta.json())
+        // a função then() retorna uma Promise, que será resolvida com o valor retornado pela função de callback
         .then(resposta => {
 
             const section = document.createElement('section');
             section.id = 'produtos';
+            section.innerHTML = '<h2>Produtos</h2>';
             
             resposta.forEach(produto => {
                 const ul = document.createElement('ul');
@@ -30,7 +37,12 @@ function consultaProdutos() {
                 liPreco.innerHTML = produto.preco;
                 liPreco.setAttribute('data-produto', 'preco');
 
-                ul.append(liId, liDescricao, liPreco);
+                const btDelete = document.createElement('button');
+                btDelete.type = 'button';
+                btDelete.innerHTML = '❌';
+                btDelete.setAttribute('data-acao', 'remover');
+
+                ul.append(liId, liDescricao, liPreco, btDelete);
                 section.append(ul);
             });
 
@@ -39,5 +51,3 @@ function consultaProdutos() {
         });
 
 }
-
-consultaProdutos();

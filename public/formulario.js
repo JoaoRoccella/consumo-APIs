@@ -24,6 +24,7 @@ function criaDivForm(inputs) {
         l.htmlFor = produto.id;
         l.innerHTML = produto.label;
 
+        // 
         div.append(l, i);
         divForm.append(div);
     });
@@ -32,6 +33,7 @@ function criaDivForm(inputs) {
     btAdd.type = 'button';
     btAdd.id = 'btAdd';
     btAdd.innerHTML = 'Adicionar';
+    btAdd.setAttribute('data-acao', 'adicionar');
     divForm.append(btAdd);
 
     return divForm;

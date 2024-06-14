@@ -10,47 +10,87 @@
 <body>
 
     <script src="estilos.js"></script>
-    <script src="script.js"></script>
+    <script src="consulta.js"></script>
     <script src="formulario.js"></script>
+    <script src="update.js"></script>
+    <script src="delete.js"></script>
 
     <script>
-        // index.js
-        document.querySelector('#btAdd').addEventListener('click', () => {
 
-            const produto = {
-                "descricao": document.querySelector('#descricao').value,
-                "preco": document.querySelector('#preco').value
-            }
+        document.addEventListener('DOMContentLoaded', () => {
 
-            const reqPost = new Request('http://localhost:3000/produtos', {
-                "method": "POST",
-                "headers": {
-                    "Content-type": "application/json"
-                },
-                "body": JSON.stringify(produto)
-            });
-
-            fetch(reqPost).then(resposta => {
-                if (resposta.status === 201) {
-                    alert('Produto cadastrado com sucesso!');
-                    document.querySelector('#descricao').value = '';
-                    document.querySelector('#preco').value = '';
-                }
-            }).catch((err) => {
-                console.log(err)
-            });
-
+            consultaProdutos();
         });
 
         document.addEventListener('click', event => {
-            if (event.target.closest('section').id === 'produtos') {
-                console.log(event.target.closest('ul').getAttribute('data-id'));
-                
-                document.querySelector('#idProduto').value = event.target.closest('ul').querySelector('[data-produto="id"]').textContent;
-                document.querySelector('#descricao').value = event.target.closest('ul').querySelector('[data-produto="descricao"]').textContent;
-                document.querySelector('#preco').value = event.target.closest('ul').querySelector('[data-produto="preco"]').textContent;
 
-                document.querySelector('#btAdd').innerHTML = 'Atualizar';
+            try {
+
+                if (event.target.closest('section').id === 'produtos') {
+                    console.log(event.target.closest('ul').getAttribute('data-id'));
+    
+                    document.querySelector('#idProduto').value = event.target.closest('ul').querySelector('[data-produto="id"]').textContent;
+                    document.querySelector('#descricao').value = event.target.closest('ul').querySelector('[data-produto="descricao"]').textContent;
+                    document.querySelector('#preco').value = event.target.closest('ul').querySelector('[data-produto="preco"]').textContent;
+    
+                    document.querySelector('#btAdd').innerHTML = 'Atualizar';
+                    document.querySelector('#btAdd').setAttribute('data-acao', 'atualizar');
+                }
+
+            } catch(err) {
+                console.log(err);
+            }
+
+            if (event.target.getAttribute('data-acao') === 'adicionar') {
+
+                const produto = {
+                    "descricao": document.querySelector('#descricao').value,
+                    "preco": document.querySelector('#preco').value
+                }
+
+                const reqPost = new Request('http://localhost:3000/produtos', {
+                    "method": "POST",
+                    "headers": {
+                        "Content-type": "application/json"
+                    },
+                    "body": JSON.stringify(produto)
+                });
+
+                fetch(reqPost).then(resposta => {
+                    if (resposta.status === 201) {
+                        alert('Produto cadastrado com sucesso!');
+                        document.querySelector('#descricao').value = '';
+                        document.querySelector('#preco').value = '';
+                        limpaProdutos();
+                        consultaProdutos();
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                }).finally(() => {
+                    console.log('Segue a vida');
+                });
+
+            }
+
+            if (event.target.getAttribute('data-acao') === 'atualizar') {
+
+                const produto = {
+                    "id": document.querySelector('#idProduto').value,
+                    "descricao": document.querySelector('#descricao').value,
+                    "preco": document.querySelector('#preco').value
+                }
+
+                atualizaProduto(produto);
+                
+            }
+
+            if (event.target.getAttribute('data-acao') === 'remover') {
+
+                const id = event.target.closest('ul').querySelector('[data-produto="id"]').textContent;
+
+                removeProduto(id);
+                limpaProdutos();
+                consultaProdutos();
             }
         });
 
